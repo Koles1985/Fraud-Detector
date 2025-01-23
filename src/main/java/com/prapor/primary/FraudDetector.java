@@ -17,7 +17,7 @@ public class FraudDetector {
 
     public boolean isFraud(Transaction transaction){
         String nameTrader = transaction.getTrader().getFullName();
-        if(scammers.contains(nameTrader)) {
+        if(scammers.contains(nameTrader) || transaction.getAmount() > 1_000_000) {
             return true;
         }else {
             return false;

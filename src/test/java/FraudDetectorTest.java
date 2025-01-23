@@ -13,14 +13,28 @@ public class FraudDetectorTest {
     @Test
     public void shouldByFraudDetectorTraderPokemon(){
         Trader trader = new Trader("Pokemon", "Paris");
-        Transaction transaction = new Transaction(trader, 1000);
+        Transaction transaction = new Transaction(trader, 1_000);
         assertTrue(fraudDetector.isFraud(transaction));
     }
 
     @Test
     public void shouldByFraudDetectorAnyTrader(){
         Trader trader = new Trader("Jet", "Rome");
-        Transaction transaction = new Transaction(trader, 1000);
+        Transaction transaction = new Transaction(trader, 999_999);
+        assertFalse(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorTraderAmountMillionPlus(){
+        Trader trader = new Trader("John", "Paris");
+        Transaction transaction = new Transaction(trader, 1_000_001);
+        assertTrue(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorAmountMillionMinus(){
+        Trader trader = new Trader("John", "Rome");
+        Transaction transaction = new Transaction(trader, 999_999);
         assertFalse(fraudDetector.isFraud(transaction));
     }
 }
