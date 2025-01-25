@@ -37,4 +37,17 @@ public class FraudDetectorTest {
         Transaction transaction = new Transaction(trader, 999_999);
         assertFalse(fraudDetector.isFraud(transaction));
     }
+    @Test
+    public void shouldByFraudDetectorFromCityTrue(){
+        Trader trader = new Trader("John", "Paris");
+        Transaction transaction = new Transaction(trader, 1_000_001);
+        assertTrue(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorFromCityFalse(){
+        Trader trader = new Trader("John", "Rome");
+        Transaction transaction = new Transaction(trader, 999_999);
+        assertFalse(fraudDetector.isFraud(transaction));
+    }
 }
