@@ -18,13 +18,22 @@ public class FraudDetector {
     public boolean isFraud(Transaction transaction){
         String nameTrader = transaction.getTrader().getFullName();
         String cityTrader = transaction.getTrader().getCity();
-        if((scammers.contains(nameTrader)
-                ||
-                transaction.getAmount() > 1_000_000)
-                ||
-                cityTrader.equals("Synney")) {
+        String countryTrader = transaction.getTrader().getCountry();
+
+
+        if (scammers.contains(nameTrader)){
             return true;
-        }else {
+        }
+        if (transaction.getAmount() > 1_000_000){
+            return  true;
+        }
+        if (cityTrader.equals("Sydney")) {
+            return true;
+        }
+        if (countryTrader.equals("Jamaica")){
+            return true;
+        }
+        else {
             return false;
         }
     }
