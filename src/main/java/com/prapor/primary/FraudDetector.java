@@ -1,44 +1,29 @@
 package com.prapor.primary;
 
+import com.prapor.rules.*;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FraudDetector {
 
-    private List<String> scammers;
-
+    private List<FraudRule> fraudList;
 
     public FraudDetector() {
-        this.scammers = new ArrayList<>()
-        {{
-            add("Pokemon");
-        }};
+        fraudList = new ArrayList<>();
+        Collections.addAll(fraudList, new FraudRule_1(), new FraudRule_2(), new FraudRule_3(),
+                new FraudRule_4(), new FraudRule_5());
     }
 
     public boolean isFraud(Transaction transaction){
-        String nameTrader = transaction.getTrader().getFullName();
-        String cityTrader = transaction.getTrader().getCity();
-        String countryTrader = transaction.getTrader().getCountry();
-
-
-        if (scammers.contains(nameTrader)){
-            return true;
+        boolean isNotReliable = false;
+        for (FraudRule fr : fraudList){
+            isNotReliable = fr.isFraud(transaction);
+            if(isNotReliable){
+                return isNotReliable;
+            }
         }
-        if (transaction.getAmount() > 1_000_000){
-            return  true;
+        return isNotReliable;
         }
-        if (cityTrader.equals("Sydney")) {
-            return true;
-        }
-        if (countryTrader.equals("Jamaica")){
-            return true;
-        }
-        if(transaction.getAmount() > 1000 & countryTrader.equals("Germany")){
-            return  true;
-        }
-        else {
-            return false;
-        }
-    }
-
 }

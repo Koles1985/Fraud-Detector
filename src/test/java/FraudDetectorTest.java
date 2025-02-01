@@ -10,71 +10,77 @@ public class FraudDetectorTest {
 
     private FraudDetector fraudDetector = new FraudDetector();
 
+
+
+
+
+
     @Test
-    public void shouldByFraudDetectorTraderPokemon(){
-        Trader trader = new Trader("Pokemon", "Paris");
+    public void shouldByFraudDetectorRule_1(){
+        Trader trader = new Trader("Pokemon", "Paris", "France");
         Transaction transaction = new Transaction(trader, 1_000);
         assertTrue(fraudDetector.isFraud(transaction));
     }
 
     @Test
-    public void shouldByFraudDetectorAnyTrader(){
-        Trader trader = new Trader("Jet", "Rome");
-        Transaction transaction = new Transaction(trader, 999_999);
-        assertFalse(fraudDetector.isFraud(transaction));
-    }
-
-    @Test
-    public void shouldByFraudDetectorTraderAmountMillionPlus(){
-        Trader trader = new Trader("John", "Paris");
-        Transaction transaction = new Transaction(trader, 1_000_001);
-        assertTrue(fraudDetector.isFraud(transaction));
-    }
-
-    @Test
-    public void shouldByFraudDetectorAmountMillionMinus(){
-        Trader trader = new Trader("John", "Rome");
-        Transaction transaction = new Transaction(trader, 999_999);
-        assertFalse(fraudDetector.isFraud(transaction));
-    }
-    @Test
-    public void shouldByFraudDetectorFromCityTrue(){
-        Trader trader = new Trader("John", "Paris");
-        Transaction transaction = new Transaction(trader, 1_000_001);
-        assertTrue(fraudDetector.isFraud(transaction));
-    }
-
-    @Test
-    public void shouldByFraudDetectorFromCityFalse(){
-        Trader trader = new Trader("John", "Rome");
-        Transaction transaction = new Transaction(trader, 999_999);
-        assertFalse(fraudDetector.isFraud(transaction));
-    }
-
-    @Test
-    public void shouldByFraudDetectorTraderFromJamaica(){
-        Trader trader = new Trader("John", "Paris", "Jamaica");
-        Transaction transaction = new Transaction(trader, 1_000_001);
-        assertTrue(fraudDetector.isFraud(transaction));
-    }
-
-    @Test
-    public void shouldByFraudDetectorTraderNotFromJamaica(){
+    public void shouldByFraudDetectorRule_1_false() {
         Trader trader = new Trader("John", "Rome", "Italy");
         Transaction transaction = new Transaction(trader, 999_999);
         assertFalse(fraudDetector.isFraud(transaction));
     }
 
     @Test
-    public void shouldByFraudDetectorTraderFromGermanyAndAmountMoreThousand(){
-        Trader trader = new Trader("Endy", "Berlin", "Germany");
-        Transaction transaction = new Transaction(trader, 1001);
+    public void shouldByFraudDetectorRule_2(){
+        Trader trader = new Trader("Enny", "Paris", "France");
+        Transaction transaction = new Transaction(trader, 1_000_001);
         assertTrue(fraudDetector.isFraud(transaction));
     }
 
     @Test
-    public void shouldByFraudDetectorTraderFromGermanyAndAmountNotMoreThousand(){
-        Trader trader = new Trader("Garry", "Berlin", "Germany");
+    public void shouldByFraudDetectorRule_2_false() {
+        Trader trader = new Trader("John", "Rome", "Italy");
+        Transaction transaction = new Transaction(trader, 999_999);
+        assertFalse(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_3(){
+        Trader trader = new Trader("Endy", "Sydney", "France");
+        Transaction transaction = new Transaction(trader, 1_000);
+        assertTrue(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_3_false() {
+        Trader trader = new Trader("John", "Rome", "Italy");
+        Transaction transaction = new Transaction(trader, 50_000);
+        assertFalse(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_4(){
+        Trader trader = new Trader("Vaska", "Paris", "Jamaica");
+        Transaction transaction = new Transaction(trader, 100_000);
+        assertTrue(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_4_false() {
+        Trader trader = new Trader("John", "Rome", "Italy");
+        Transaction transaction = new Transaction(trader, 0);
+        assertFalse(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_5(){
+        Trader trader = new Trader("Pokemon", "Paris", "Germany");
+        Transaction transaction = new Transaction(trader, 1_001);
+        assertTrue(fraudDetector.isFraud(transaction));
+    }
+
+    @Test
+    public void shouldByFraudDetectorRule_5_false() {
+        Trader trader = new Trader("John", "Rome", "Germany");
         Transaction transaction = new Transaction(trader, 1000);
         assertFalse(fraudDetector.isFraud(transaction));
     }
