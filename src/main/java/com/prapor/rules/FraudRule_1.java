@@ -6,10 +6,6 @@ public class FraudRule_1 implements FraudRule{
 
     @Override
     public boolean isFraud(Transaction transaction) {
-        if(transaction.getTrader().getFullName().equals("Pokemon")){
-            return true;
-        }else{
-            return  false;
-        }
+        return transaction.getTrader().getFullName().equals("Pokemon");
     }
 }

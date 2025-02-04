@@ -84,4 +84,6 @@ public class FraudDetectorTest {
         Transaction transaction = new Transaction(trader, 1000);
         assertFalse(fraudDetector.isFraud(transaction));
     }
+
+
 }

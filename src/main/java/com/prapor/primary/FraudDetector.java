@@ -9,6 +9,7 @@ import java.util.List;
 public class FraudDetector {
 
     private List<FraudRule> fraudList;
+    private int indexOfRule = -1;
 
     public FraudDetector() {
         fraudList = new ArrayList<>();
@@ -17,13 +18,26 @@ public class FraudDetector {
     }
 
     public boolean isFraud(Transaction transaction){
-        boolean isNotReliable = false;
+        boolean isForbidden = false;
         for (FraudRule fr : fraudList){
-            isNotReliable = fr.isFraud(transaction);
-            if(isNotReliable){
-                return isNotReliable;
+            isForbidden = fr.isFraud(transaction);
+                if(isForbidden){
+                    indexOfRule = fraudList.indexOf(fr);
+                    return isForbidden;
+                }
             }
+        return isForbidden;
+    }
+
+    public String getRule(){
+        String className = null;
+        if(indexOfRule >= 0) {
+            System.out.println("FraudDetector getRule indexOfRule = " + indexOfRule);
+            className = fraudList.get(indexOfRule).getClass().toString();
         }
-        return isNotReliable;
-        }
+        System.out.println("indexOfRule < 0 ? - " + indexOfRule + " className = " + className);
+        return className;
+    }
+
+
 }
