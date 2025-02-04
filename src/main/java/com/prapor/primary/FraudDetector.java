@@ -9,7 +9,8 @@ import java.util.List;
 public class FraudDetector {
 
     private List<FraudRule> fraudList;
-    private int indexOfRule = -1;
+    private String rule;
+
 
     public FraudDetector() {
         fraudList = new ArrayList<>();
@@ -22,7 +23,7 @@ public class FraudDetector {
         for (FraudRule fr : fraudList){
             isForbidden = fr.isFraud(transaction);
                 if(isForbidden){
-                    indexOfRule = fraudList.indexOf(fr);
+                    rule = fr.getRuleName();
                     return isForbidden;
                 }
             }
@@ -30,13 +31,17 @@ public class FraudDetector {
     }
 
     public String getRule(){
-        String className = null;
-        if(indexOfRule >= 0) {
-            System.out.println("FraudDetector getRule indexOfRule = " + indexOfRule);
-            className = fraudList.get(indexOfRule).getClass().toString();
+       return this.rule;
+    }
+
+    public FraudDetectorResult isFraud2(Transaction transaction){
+        for (FraudRule fr : fraudList){
+            if(fr.isFraud(transaction)){
+                rule = fr.getRuleName();
+                return new FraudDetectorResult(true, rule);
+            }
         }
-        System.out.println("indexOfRule < 0 ? - " + indexOfRule + " className = " + className);
-        return className;
+        return new FraudDetectorResult(false, null);
     }
 
 

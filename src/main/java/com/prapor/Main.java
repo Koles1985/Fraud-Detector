@@ -8,8 +8,8 @@ import com.prapor.primary.Transaction;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Trader trader = new Trader("Tom", "Japan", "Germany");
-        Transaction transaction = new Transaction(trader, 100);
+        Trader trader = new Trader("Polly", "New York");
+        Transaction transaction = new Transaction(trader, 1_000_100);
         FraudDetector fraudDetector = new FraudDetector();
 
         boolean isFraud = fraudDetector.isFraud(transaction);

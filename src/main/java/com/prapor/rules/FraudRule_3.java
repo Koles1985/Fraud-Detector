@@ -8,4 +8,9 @@ public class FraudRule_3 implements FraudRule{
     public boolean isFraud(Transaction transaction) {
         return transaction.getTrader().getCity().equals("Sydney");
     }
+
+    @Override
+    public String getRuleName() {
+        return "Rule_3 =  Trader city is Sydney";
+    }
 }
